@@ -3,40 +3,40 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>금리 · CDS 모니터</title>
+<title>금리 · 원유 · CDS 모니터</title>
 <style>
-:root{--bg:#fdf0e1;--card:#fff;--line:#f0d8bd;--ink:#2b1a0d;--mute:#8c6c4f;--acc:#e8590c;--accd:#c44a08;--soft:#fff7ee;--up:201,42,42;--dn:28,110,213}
+:root{--bg:#fdf0e1;--card:#fff;--line:#f0d8bd;--ink:#2b1a0d;--mute:#8c6c4f;--acc:#e8590c;--accd:#c44a08;--soft:#fff7ee;--up:201,42,42;--dn:28,110,213;--bar:#bdeef5;--bart:#0c3d49}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 system-ui,-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;font-variant-numeric:tabular-nums}
 .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
-.bar{position:sticky;top:0;z-index:10;background:var(--acc);color:#fff}
-.bar .wrap{display:flex;align-items:center;gap:28px;height:54px}
-.brand{font-weight:800;font-size:17px;letter-spacing:-.01em}
-.bar nav{display:flex;gap:6px;flex:1}
-.bar nav a{color:#fff;text-decoration:none;padding:6px 12px;border-radius:6px;font-weight:600;font-size:13.5px;opacity:.92}
-.bar nav a:hover{background:rgba(255,255,255,.18)}
-.stamp{font-size:12.5px;background:rgba(0,0,0,.16);padding:4px 12px;border-radius:999px;white-space:nowrap}
+.bar{position:sticky;top:0;z-index:10;background:var(--bar);color:var(--bart);border-bottom:1px solid #9fdde8}
+.bar .wrap{display:flex;align-items:center;gap:22px;min-height:54px}
+.brand{font-weight:800;font-size:17px;letter-spacing:-.01em;white-space:nowrap}
+.bar nav{display:flex;gap:4px;flex:1}
+.bar nav a{color:var(--bart);text-decoration:none;padding:7px 13px;border-radius:8px;font-weight:700;font-size:13.5px;white-space:nowrap}
+.bar nav a:hover{background:rgba(255,255,255,.55)}.bar nav a.on{background:#fff}
+.stamp{font-size:12.5px;background:rgba(255,255,255,.6);padding:4px 12px;border-radius:999px;white-space:nowrap}
 main{padding:8px 0 40px}
-.sec{margin:34px 0 12px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.sec{margin:30px 0 12px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
 .sec h2{margin:0;font-size:19px;font-weight:800;padding-left:12px;border-left:5px solid var(--acc)}
 .sec span{color:var(--mute);font-size:13px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
 h3{margin:0;font-size:15px;font-weight:700}
 .sub{color:var(--mute);font-size:12.5px;margin:4px 0 0}
-.boxes{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.boxes{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}.boxes.b4{grid-template-columns:repeat(4,1fr)}
 .box{text-align:center;padding:14px 8px}
 .box .k{font-weight:800;color:var(--accd);font-size:14px}
 .box .lv{font-size:30px;font-weight:800;letter-spacing:-.02em;margin:2px 0 6px}
 .box .lv small{font-size:15px;color:var(--mute);font-weight:600;margin-left:1px}
 .chip{display:inline-block;font-size:12px;font-weight:700;padding:2px 10px;border-radius:999px;background:var(--soft);color:var(--mute)}
 .chip.up{background:rgba(var(--up),.12);color:rgb(var(--up))}.chip.dn{background:rgba(var(--dn),.12);color:rgb(var(--dn))}
+.upt{color:rgb(var(--up))}.dnt{color:rgb(var(--dn))}
 .two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));gap:16px;margin-top:16px}
 .pgh{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .pg{display:flex;align-items:center;gap:10px;font-weight:700;font-size:13.5px}
 .pg span{min-width:150px;text-align:center}
 .ar{width:34px;height:34px;padding:0;border:1px solid var(--line);background:var(--soft);color:var(--accd);border-radius:8px;font-size:14px;cursor:pointer}
-.ar:hover:not(:disabled){background:var(--acc);color:#fff;border-color:var(--acc)}
-.ar:disabled{opacity:.35;cursor:default}
+.ar:hover:not(:disabled){background:var(--acc);color:#fff;border-color:var(--acc)}.ar:disabled{opacity:.35;cursor:default}
 .tw{max-height:360px;overflow:auto;border:1px solid var(--line);border-radius:8px;margin-top:12px}
 table{border-collapse:collapse;width:100%}
 th,td{padding:9px 14px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
@@ -44,15 +44,24 @@ thead th{position:sticky;top:0;z-index:2;background:var(--soft);color:var(--accd
 tbody th{text-align:left;font-weight:600;position:sticky;left:0;background:var(--card)}
 tbody tr:last-child>*{border-bottom:0}
 td.up{background:rgba(var(--up),calc(var(--a)*.45));color:#7a1010}td.dn{background:rgba(var(--dn),calc(var(--a)*.45));color:#0d3f80}td.na{color:var(--mute)}
-td.lv{font-weight:700}
+td.lv{font-weight:700}td.lv small{display:block;font-size:11.5px}
+.tw td input{width:86px;padding:6px 8px}
 .empty{padding:22px;color:var(--mute);margin:0;text-align:center}
 .legend{display:flex;gap:16px;font-size:12.5px;color:var(--mute);margin:6px 0 2px}
 .legend i{display:inline-block;width:18px;border-top:3px solid var(--acc);vertical-align:middle;margin-right:6px}
-.legend i.m{border-top:2px dashed var(--mute)}
+.legend i.m{border-top:2px dashed var(--mute)}.legend i.e{border-top-color:#2a7f62}
 svg.cv{width:100%;height:auto;display:block}
 .cv text{fill:var(--mute);font-size:11px}.cv .g{stroke:var(--line)}
-.cv .a{fill:none;stroke:var(--acc);stroke-width:2.6}.cv .b{fill:none;stroke:var(--mute);stroke-width:1.8;stroke-dasharray:5 4}
-.cv circle{fill:#fff;stroke:var(--acc);stroke-width:2.2}
+.cv .a{fill:none;stroke:var(--acc);stroke-width:2.6}.cv .c{fill:none;stroke:#2a7f62;stroke-width:2.6}
+.cv .b{fill:none;stroke:var(--mute);stroke-width:1.8;stroke-dasharray:5 4}.cv circle{fill:#fff;stroke-width:2.2}
+.pill{font:inherit;font-weight:700;padding:7px 16px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--ink);cursor:pointer}
+.pill.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.dec{border:2px solid var(--acc);border-radius:14px;background:var(--card);padding:22px;text-align:center}
+.dec .dl{color:var(--mute);font-weight:700}.dec .dv{font-size:46px;font-weight:900;letter-spacing:-.02em;color:var(--accd)}.dec .dm{color:var(--mute);font-size:13px}
+.dec.Hike{border-color:rgb(var(--up))}.dec.Hike .dv{color:rgb(var(--up))}.dec.Cut{border-color:rgb(var(--dn))}.dec.Cut .dv{color:rgb(var(--dn))}
+.ev{margin:12px 0 0;padding-left:24px}.ev li{padding:7px 0;border-bottom:1px solid var(--line)}.ev li:last-child{border-bottom:0}
+.src{margin:8px 0 0;padding-left:18px;font-size:13px}.src a{color:var(--accd)}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));gap:16px;margin-top:16px}
 .entry{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:end;margin-top:12px}
 .entry label{display:flex;flex-direction:column;font-size:12.5px;color:var(--mute);gap:3px;font-weight:600}
 input{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--soft);color:var(--ink);width:104px}
@@ -60,19 +69,20 @@ input[type=date]{width:150px}input.name{width:170px}
 button.pri{font:inherit;font-weight:700;padding:8px 18px;border:0;border-radius:8px;background:var(--acc);color:#fff;cursor:pointer}
 button.pri:hover{background:var(--accd)}
 button.ghost{font:inherit;font-weight:600;padding:8px 14px;border:1px solid var(--line);border-radius:8px;background:var(--soft);color:var(--ink);cursor:pointer}
-button.x{padding:6px 8px;margin-left:2px;border-color:transparent;background:none;color:var(--mute)}
+button.x{padding:2px 6px;border:0;background:none;color:var(--mute);cursor:pointer;font-size:13px}
 button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--accd);outline-offset:2px}
 footer{color:var(--mute);font-size:12.5px;padding:8px 0 40px}
-@media(max-width:860px){.boxes{grid-template-columns:repeat(2,1fr)}.bar nav{display:none}.bar .wrap{justify-content:space-between}}
+@media(max-width:860px){.boxes,.boxes.b4{grid-template-columns:repeat(2,1fr)}.bar .wrap{flex-wrap:wrap;gap:6px 12px;padding-top:8px;padding-bottom:8px}.bar nav{order:3;width:100%;flex:none;overflow-x:auto}}
 </style>
 </head>
 <body>
-<div class="bar"><div class="wrap"><span class="brand">금리 · CDS 모니터</span>
-  <nav><a href="#now">현재 금리</a><a href="#chg">금리 변동</a><a href="#cds">CDS</a></nav>
-  <span class="stamp" id="stamp">불러오는 중…</span></div></div>
+<div class="bar"><div class="wrap"><span class="brand">Macro Monitor</span>
+  <nav><a href="#rates" data-t="rates">US Rates</a><a href="#oil" data-t="oil">Crude Oil (WTI)</a><a href="#analysis" data-t="analysis">Analysis (Agent)</a><a href="#cds" data-t="cds">CDS (Credit Default Swap)</a></nav>
+  <span class="stamp" id="stamp"></span></div></div>
 
 <main class="wrap">
-  <div class="sec" id="now"><h2>현재 금리</h2><span id="nowSub">미국 국채 최신 종가 기준</span></div>
+<section id="tab-rates">
+  <div class="sec"><h2>현재 금리</h2><span>미국 국채 최신 종가 기준</span></div>
   <div class="boxes" id="boxes"></div>
   <div class="two">
     <section class="card"><h3>만기별 금리 요약</h3><div class="tw" id="snap"></div><p class="sub" id="yMeta"></p></section>
@@ -80,26 +90,48 @@ footer{color:var(--mute);font-size:12.5px;padding:8px 0 40px}
       <div class="legend"><span><i></i><span id="lgA">최신</span></span><span><i class="m"></i><span id="lgB">한 달 전</span></span></div>
       <div id="curve"></div></section>
   </div>
+  <div class="sec"><h2>국채금리 변동</h2><span>단위 bp · 빨강 상승, 파랑 하락 · 화살표로 기간 이동</span></div>
+  <div class="two" id="yPg" style="margin-top:0"></div>
+</section>
 
-  <div class="sec" id="chg"><h2>국채금리 변동</h2><span>단위 bp · 빨강 상승, 파랑 하락 · 화살표로 기간 이동</span></div>
-  <div class="two" style="margin-top:0">
-    <section class="card"><div class="pgh"><h3>DoD (전일 대비) · 주간</h3><div class="pg"><button class="ar" id="yDodP" aria-label="이전 주">◀</button><span id="yDodL"></span><button class="ar" id="yDodN" aria-label="다음 주">▶</button></div></div><div class="tw" id="yDodT"></div></section>
-    <section class="card"><div class="pgh"><h3>MoM (한 달 전 대비) · 월간</h3><div class="pg"><button class="ar" id="yMomP" aria-label="이전 달">◀</button><span id="yMomL"></span><button class="ar" id="yMomN" aria-label="다음 달">▶</button></div></div><div class="tw" id="yMomT"></div></section>
-  </div>
-
-  <div class="sec" id="cds"><h2>CDS</h2><span>단위 bp · 직접 입력</span></div>
-  <section class="card">
-    <h3>값 입력</h3>
-    <p class="sub">investing.com 등에서 본 값을 입력해요. 데이터는 이 브라우저에만 저장되니 가끔 CSV로 내보내 백업하세요.</p>
-    <div class="entry"><label>날짜<input type="date" id="cDate"></label><span id="cInputs" class="entry" style="margin:0"></span><button class="pri" id="cSave">저장</button></div>
-    <div class="entry"><label>항목 추가<input class="name" id="newEnt" placeholder="예: US, JPM"></label><button class="ghost" id="addEnt">추가</button><button class="ghost" id="exp">CSV 내보내기</button>
-      <label style="flex-direction:row;align-items:center;gap:8px">가져오기<input type="file" id="imp" accept=".csv" style="width:auto;border:0;padding:0;background:none"></label></div>
-  </section>
+<section id="tab-oil" hidden>
+  <div class="sec"><h2>Crude Oil (WTI)</h2><span>WTI 현물 일별 종가(달러/배럴) 기준</span></div>
+  <div class="boxes b4" id="oBoxes"></div>
   <div class="two">
-    <section class="card"><div class="pgh"><h3>DoD (전일 대비) · 주간</h3><div class="pg"><button class="ar" id="cDodP" aria-label="이전 주">◀</button><span id="cDodL"></span><button class="ar" id="cDodN" aria-label="다음 주">▶</button></div></div><div class="tw" id="cDodT"></div></section>
-    <section class="card"><div class="pgh"><h3>MoM (한 달 전 대비) · 월간</h3><div class="pg"><button class="ar" id="cMomP" aria-label="이전 달">◀</button><span id="cMomL"></span><button class="ar" id="cMomN" aria-label="다음 달">▶</button></div></div><div class="tw" id="cMomT"></div></section>
+    <section class="card"><h3>기간별 변동 요약</h3><div class="tw" id="oSnap"></div><p class="sub" id="oMeta"></p></section>
+    <section class="card"><h3>최근 7 영업일 추이</h3><div id="oTrend"></div></section>
   </div>
-  <footer>날짜는 미국 기준 관측일이에요. DoD는 직전 영업일, MoM은 한 달 전 같은 날(휴장이면 그 이전 마지막 영업일) 대비예요. 출처: FRED(DGS2, DGS5, DGS10, DGS20, DGS30).</footer>
+  <div class="sec"><h2>WTI 변동</h2><span>단위 $/bbl, % · 화살표로 기간 이동</span></div>
+  <div class="two" id="oPg" style="margin-top:0"></div>
+</section>
+
+<section id="tab-analysis" hidden>
+  <div class="sec"><h2>Analysis (Agent)</h2><span>Claude가 금리 · WTI · 뉴스를 보고 다음 FOMC 결정을 추정해요</span></div>
+  <div id="aBox"></div>
+  <section class="card" id="aEvCard" style="margin-top:16px" hidden><h3>근거 10가지</h3><ol class="ev" id="aEv"></ol><ul class="src" id="aSrc"></ul><p class="sub" id="aMeta"></p></section>
+  <p class="sub" style="margin-top:12px">AI가 만든 참고용 추정이며 투자 조언이 아니에요. 뉴스와 수치는 직접 확인하세요.</p>
+</section>
+
+<section id="tab-cds" hidden>
+  <div class="sec"><h2>CDS (Credit Default Swap)</h2><span>단위 bp · 직접 입력</span></div>
+  <div id="cGrp" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+  <div class="two"><section class="card" style="grid-column:1/-1"><h3>현재 CDS (최신 입력값, 작은 숫자는 DoD)</h3><div class="tw" id="cLv"></div></section></div>
+  <div class="sec"><h2>CDS 커브</h2><span>만기별 최신 입력값 · 통화(USD/EUR)별로 선을 나눠요</span></div>
+  <div class="cgrid" id="cCurves" style="margin-top:0"></div>
+  <div class="sec"><h2>CDS 변동</h2><span>단위 bp · 화살표로 기간 이동</span></div>
+  <div class="two" id="cPg" style="margin-top:0"></div>
+  <div class="sec"><h2>값 입력</h2></div>
+  <section class="card">
+    <p class="sub">investing.com 등에서 본 값을 선택한 그룹 표에 넣어요. 만기는 "5Y", "5Y EUR"처럼 적으면 통화별 곡선이 그려져요(통화를 안 적으면 USD). 데이터는 이 브라우저에만 저장돼요.</p>
+    <div class="entry"><label>날짜<input type="date" id="cDate"></label><button class="pri" id="cSave">저장</button></div>
+    <div class="tw" id="cGrid"></div>
+    <div class="entry"><label>회사/국가 추가<input class="name" id="newEnt" placeholder="예: HSBC"></label><button class="ghost" id="addEnt">추가</button>
+      <label>만기 추가<input class="name" id="newTen" placeholder="예: 5Y EUR"></label><button class="ghost" id="addTen">추가</button>
+      <button class="ghost" id="exp">백업 내보내기</button>
+      <label style="flex-direction:row;align-items:center;gap:8px">백업 가져오기<input type="file" id="imp" accept=".json" style="width:auto;border:0;padding:0;background:none"></label></div>
+  </section>
+</section>
+<footer>날짜는 미국 기준 관측일이에요. DoD는 직전 영업일, MoM은 한 달 전 같은 날, YoY는 1년 전 같은 날(휴장이면 그 이전 마지막 영업일) 대비예요. 출처: FRED(DGS2, DGS5, DGS10, DGS20, DGS30, DCOILWTICO).</footer>
 </main>
 
 <script>
@@ -107,27 +139,28 @@ const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const MATS=["2Y","5Y","10Y","20Y","30Y"];
 const addDays=(d,n)=>new Date(Date.parse(d+"T00:00:00Z")+n*864e5).toISOString().slice(0,10);
+const p2=n=>String(n).padStart(2,"0");
 function monthAgo(d){
-  const [y,m,dd]=d.split("-").map(Number);
-  const t=new Date(Date.UTC(y,m-2,1));
+  const [y,m,dd]=d.split("-").map(Number),t=new Date(Date.UTC(y,m-2,1));
   const last=new Date(Date.UTC(t.getUTCFullYear(),t.getUTCMonth()+1,0)).getUTCDate();
   return new Date(Date.UTC(t.getUTCFullYear(),t.getUTCMonth(),Math.min(dd,last))).toISOString().slice(0,10);
 }
-// rows: 날짜 오름차순 [{d, v:[...]}] -> 날짜 오름차순 변동. 열마다 값이 있는 가장 가까운 과거 행과 비교한다.
-function changes(rows,mode,scale){
-  return rows.map((r,i)=>{
-    const t=mode==="mom"?monthAgo(r.d):null;
-    return {d:r.d,c:r.v.map((x,k)=>{
-      if(x==null) return null;
-      for(let j=i-1;j>=0;j--){
-        const b=rows[j];
-        if(b.v[k]==null||(t&&b.d>t)) continue;
-        return Math.round((x-b.v[k])*scale*10)/10;
-      }
-      return null;
-    })};
-  }).filter(r=>r.c.some(v=>v!=null));
+function yearAgo(d){const [y,m,dd]=d.split("-").map(Number);return `${y-1}-${p2(m)}-${p2(Math.min(dd,new Date(Date.UTC(y-1,m,0)).getUTCDate()))}`;}
+const ago=(d,mode)=>mode==="mom"?monthAgo(d):mode==="yoy"?yearAgo(d):null;
+// rows: 날짜 오름차순 [{d,v:[...]}]. 열마다 값이 있는 가장 가까운 과거 값을 기준으로 삼는다.
+function baseFor(rows,i,k,mode){
+  const t=ago(rows[i].d,mode);
+  for(let j=i-1;j>=0;j--){const b=rows[j];if(b.v[k]==null||(t&&b.d>t))continue;return b.v[k];}
+  return null;
 }
+function changes(rows,mode,scale){
+  return rows.map((r,i)=>({d:r.d,c:r.v.map((x,k)=>{const b=x==null?null:baseFor(rows,i,k,mode);return b==null?null:Math.round((x-b)*scale*10)/10;})})).filter(r=>r.c.some(v=>v!=null));
+}
+function oilChg(rows,mode){
+  return rows.map((r,i)=>{const x=r.v[0],b=x==null?null:baseFor(rows,i,0,mode);
+    return {d:r.d,c:[x,b==null?null:Math.round((x-b)*100)/100,b==null?null:Math.round((x-b)/b*10000)/100]};}).filter(r=>r.c[1]!=null);
+}
+const baseAt=(rows,k,d)=>{for(let j=rows.length-1;j>=0;j--)if(rows[j].d<=d&&rows[j].v[k]!=null)return rows[j].v[k];return null;};
 const weekKey=d=>addDays(d,-((new Date(d+"T00:00:00Z").getUTCDay()+6)%7));
 const weekLabel=k=>k.replace(/-/g,".")+" – "+addDays(k,4).slice(5).replace("-",".");
 const monthLabel=k=>k.slice(0,4)+"년 "+Number(k.slice(5))+"월";
@@ -136,131 +169,201 @@ function group(list,keyf,labf){
   list.forEach(r=>{const k=keyf(r.d);if(!m.has(k))m.set(k,[]);m.get(k).push(r);});
   return [...m.entries()].sort((a,b)=>a[0]<b[0]?-1:1).map(([k,rows])=>({label:labf(k),rows:rows.slice().reverse()}));
 }
-const cell=(v,max)=>v==null?'<td class="na">-</td>':`<td style="--a:${Math.min(Math.abs(v)/max,1).toFixed(2)}" class="${v>0?"up":v<0?"dn":""}">${v>0?"+":""}${v.toFixed(1)}</td>`;
-function render(el,labels,rows,msg,max){
+const dir=v=>v>0?"up":v<0?"dn":"";
+const sg=(v,dg)=>(v>0?"+":"")+v.toFixed(dg);
+const cell=(v,max,dg=1)=>v==null?'<td class="na">-</td>':`<td style="--a:${Math.min(Math.abs(v)/max,1).toFixed(2)}" class="${dir(v)}">${sg(v,dg)}</td>`;
+const pcell=v=>v==null?'<td class="na">-</td>':`<td class="${dir(v)}">${sg(v,2)}%</td>`;
+const chip=(l,v,u="bp",dg=1)=>v==null?`<span class="chip">${l} -</span>`:`<span class="chip ${dir(v)}">${l} ${sg(v,dg)}${u}</span>`;
+const oilFmt=(v,k,m)=>k===0?(v==null?'<td class="na">-</td>':`<td class="lv">${v.toFixed(2)}</td>`):k===1?cell(v,m,2):pcell(v);
+function render(el,labels,rows,msg,max,fmt){
   if(!rows.length){el.innerHTML='<p class="empty">'+msg+'</p>';return;}
+  const f=fmt||((v,k,m)=>cell(v,m));
   el.innerHTML='<table><thead><tr><th style="text-align:left">날짜</th>'+labels.map(l=>`<th>${esc(l)}</th>`).join("")+'</tr></thead><tbody>'
-    +rows.map(r=>`<tr><th scope="row">${r.d}</th>${r.c.map(v=>cell(v,max)).join("")}</tr>`).join("")+"</tbody></table>";
+    +rows.map(r=>`<tr><th scope="row">${r.d}</th>${r.c.map((v,k)=>f(v,k,max)).join("")}</tr>`).join("")+"</tbody></table>";
 }
-// 주간/월간 페이저: 기본은 가장 최근 구간, ◀ 과거 / ▶ 최근
-function mkPager(id,labels,groups,msg){
+// 구간별 페이저: 기본은 가장 최근 구간, ◀ 과거 / ▶ 최근
+function mkPager(id,labels,groups,msg,o={}){
   let i=groups.length-1;
   const P=$("#"+id+"P"),N=$("#"+id+"N"),L=$("#"+id+"L"),T=$("#"+id+"T");
-  const max=Math.max(1,...groups.flatMap(g=>g.rows.flatMap(r=>r.c.filter(v=>v!=null).map(Math.abs))));
+  const max=Math.max(1,...groups.flatMap(g=>g.rows.flatMap(r=>(o.maxK==null?r.c:[r.c[o.maxK]]).filter(v=>v!=null).map(Math.abs))));
   const draw=()=>{
     if(!groups.length){L.textContent="-";P.disabled=N.disabled=true;render(T,labels,[],msg,1);return;}
     L.textContent=groups[i].label;P.disabled=i===0;N.disabled=i===groups.length-1;
-    render(T,labels,groups[i].rows,msg,max);
+    render(T,labels,groups[i].rows,msg,max,o.fmt);
   };
-  P.onclick=()=>{if(i>0){i--;draw();}};
-  N.onclick=()=>{if(i<groups.length-1){i++;draw();}};
+  P.onclick=()=>{if(i>0){i--;draw();}};N.onclick=()=>{if(i<groups.length-1){i++;draw();}};
   draw();
 }
-const dir=v=>v>0?"up":v<0?"dn":"";
-const chip=(l,v)=>v==null?`<span class="chip">${l} -</span>`:`<span class="chip ${dir(v)}">${l} ${v>0?"+":""}${v.toFixed(1)}bp</span>`;
-function curve(a,b){
-  const W=560,H=240,L=44,R=18,T=14,B=30,all=[...a,...b].filter(x=>x!=null);
-  if(!all.length) return "";
-  let lo=Math.min(...all),hi=Math.max(...all);const pad=((hi-lo)||.2)*.25;lo-=pad;hi+=pad;
-  const x=i=>L+i*(W-L-R)/4,y=v=>T+(hi-v)*(H-T-B)/(hi-lo);
-  const path=arr=>arr.map((v,i)=>v==null?"":((i&&arr[i-1]!=null)?"L":"M")+x(i).toFixed(1)+" "+y(v).toFixed(1)).join(" ");
+const pgCard=(id,t)=>`<section class="card"><div class="pgh"><h3>${t}</h3><div class="pg"><button class="ar" id="${id}P" aria-label="이전">◀</button><span id="${id}L"></span><button class="ar" id="${id}N" aria-label="다음">▶</button></div></div><div class="tw" id="${id}T"></div></section>`;
+$("#yPg").innerHTML=pgCard("yDod","DoD (전일 대비) · 주간")+pgCard("yMom","MoM (한 달 전 대비) · 월간");
+$("#oPg").innerHTML=pgCard("oDod","DoD (전일 대비) · 주간")+pgCard("oMom","MoM (한 달 전 대비) · 월간")+pgCard("oYoy","YoY (1년 전 대비) · 연간");
+$("#cPg").innerHTML=pgCard("cDod","DoD (전일 대비) · 주간")+pgCard("cMom","MoM (한 달 전 대비) · 월간");
+
+// S: [{v:[...],cls:"a"|"b"|"c"}], X: x축 라벨
+function curve(S,X){
+  const W=560,H=240,L=44,R=18,T=14,B=30,all=S.flatMap(s=>s.v).filter(x=>x!=null);
+  if(!all.length) return '<p class="empty">표시할 값이 없어요.</p>';
+  let lo=Math.min(...all),hi=Math.max(...all);const pad=((hi-lo)||Math.abs(hi)*.02||.2)*.25;lo-=pad;hi+=pad;
+  const n=X.length,x=i=>L+(n>1?i*(W-L-R)/(n-1):(W-L-R)/2),y=v=>T+(hi-v)*(H-T-B)/(hi-lo),dg=(hi-lo)>8?0:2;
+  const path=a=>a.map((v,i)=>v==null?"":((i&&a[i-1]!=null)?"L":"M")+x(i).toFixed(1)+" "+y(v).toFixed(1)).join(" ");
   let g="";
-  for(let k=0;k<4;k++){const v=lo+(hi-lo)*k/3;g+=`<line class="g" x1="${L}" x2="${W-R}" y1="${y(v).toFixed(1)}" y2="${y(v).toFixed(1)}"/><text x="${L-8}" y="${(y(v)+4).toFixed(1)}" text-anchor="end">${v.toFixed(2)}</text>`;}
-  g+=MATS.map((m,i)=>`<text x="${x(i).toFixed(1)}" y="${H-8}" text-anchor="middle">${m}</text>`).join("");
-  const dots=a.map((v,i)=>v==null?"":`<circle cx="${x(i).toFixed(1)}" cy="${y(v).toFixed(1)}" r="3.8"><title>${MATS[i]} ${v.toFixed(2)}%</title></circle>`).join("");
-  return `<svg class="cv" viewBox="0 0 ${W} ${H}" role="img" aria-label="수익률 곡선">${g}<path class="b" d="${path(b)}"/><path class="a" d="${path(a)}"/>${dots}</svg>`;
+  for(let k=0;k<4;k++){const v=lo+(hi-lo)*k/3;g+=`<line class="g" x1="${L}" x2="${W-R}" y1="${y(v).toFixed(1)}" y2="${y(v).toFixed(1)}"/><text x="${L-8}" y="${(y(v)+4).toFixed(1)}" text-anchor="end">${v.toFixed(dg)}</text>`;}
+  g+=X.map((m,i)=>`<text x="${x(i).toFixed(1)}" y="${H-8}" text-anchor="middle">${esc(m)}</text>`).join("");
+  const dots=S.filter(s=>s.cls!=="b").map(s=>s.v.map((v,i)=>v==null?"":`<circle cx="${x(i).toFixed(1)}" cy="${y(v).toFixed(1)}" r="3.8" style="stroke:${s.cls==="c"?"#2a7f62":"var(--acc)"}"><title>${esc(X[i])} ${v}</title></circle>`).join("")).join("");
+  return `<svg class="cv" viewBox="0 0 ${W} ${H}" role="img">${g}${S.map(s=>`<path class="${s.cls}" d="${path(s.v)}"/>`).join("")}${dots}</svg>`;
 }
-const baseAt=(rows,k,d)=>{for(let j=rows.length-1;j>=0;j--)if(rows[j].d<=d&&rows[j].v[k]!=null)return rows[j].v[k];return null;};
+async function getRows(p,n){
+  const r=await fetch(p+"?"+Date.now());if(!r.ok)throw new Error(r.status);
+  return (await r.text()).trim().split("\n").slice(1).filter(Boolean).map(l=>{const c=l.split(",");return {d:c[0],v:c.slice(1,1+n).map(x=>x===""||x==null?null:parseFloat(x))};}).sort((a,b)=>a.d<b.d?-1:1);
+}
+
+/* ---------- 탭 ---------- */
+const TABS=["rates","oil","analysis","cds"],stamps={};
+function show(){
+  const h=location.hash.slice(1),t=TABS.includes(h)?h:"rates";
+  TABS.forEach(x=>{$("#tab-"+x).hidden=x!==t;document.querySelector(`nav a[data-t="${x}"]`).classList.toggle("on",x===t);});
+  $("#stamp").textContent=stamps[t]||"";
+}
+addEventListener("hashchange",show);
 
 /* ---------- 국채금리 ---------- */
+const NODATA="아직 데이터가 없어요. GitHub Actions의 'Update data'를 한 번 실행해 주세요.";
 async function loadYields(){
-  const msg="아직 데이터가 없어요. GitHub Actions의 'Update yields'를 한 번 실행해 주세요.";
   try{
-    const res=await fetch("data/yields.csv?"+Date.now());
-    if(!res.ok) throw new Error(res.status);
-    const lines=(await res.text()).trim().split("\n").slice(1).filter(Boolean);
-    const rows=lines.map(l=>{const c=l.split(",");return {d:c[0],v:c.slice(1,6).map(x=>x===""||x==null?null:parseFloat(x))};}).sort((a,b)=>a.d<b.d?-1:1);
+    const rows=await getRows("data/yields.csv",5);
     const dod=changes(rows,"dod",100),mom=changes(rows,"mom",100);
-    mkPager("yDod",MATS,group(dod,weekKey,weekLabel),msg);
-    mkPager("yMom",MATS,group(mom,d=>d.slice(0,7),monthLabel),msg);
-    if(!rows.length){$("#stamp").textContent="데이터 없음";$("#yMeta").textContent=msg;return;}
-    const last=rows[rows.length-1],t=monthAgo(last.d),prev=[...rows].reverse().find(r=>r.d<=t);
-    $("#stamp").textContent="최신 관측일 "+last.d;
+    mkPager("yDod",MATS,group(dod,weekKey,weekLabel),NODATA);
+    mkPager("yMom",MATS,group(mom,d=>d.slice(0,7),monthLabel),NODATA);
+    if(!rows.length){stamps.rates="데이터 없음";$("#yMeta").textContent=NODATA;return;}
+    const last=rows[rows.length-1],prev=[...rows].reverse().find(r=>r.d<=monthAgo(last.d));
+    stamps.rates="최신 관측일 "+last.d;
     $("#lgA").textContent=last.d;$("#lgB").textContent=prev?prev.d:"한 달 전 데이터 없음";
-    const ld=dod[dod.length-1]&&dod[dod.length-1].d===last.d?dod[dod.length-1].c:[],lm=mom[mom.length-1]&&mom[mom.length-1].d===last.d?mom[mom.length-1].c:[];
+    const at=(l,d)=>l.length&&l[l.length-1].d===d?l[l.length-1].c:[],ld=at(dod,last.d),lm=at(mom,last.d);
     $("#boxes").innerHTML=MATS.map((m,i)=>`<div class="card box"><div class="k">미국 ${m}</div><div class="lv">${last.v[i]==null?"-":last.v[i].toFixed(2)}<small>%</small></div>${chip("DoD",ld[i])}</div>`).join("");
     const w1=MATS.map((m,i)=>{const b=baseAt(rows,i,addDays(last.d,-7));return last.v[i]!=null&&b!=null?Math.round((last.v[i]-b)*1000)/10:null;});
     $("#snap").innerHTML='<table><thead><tr><th style="text-align:left">만기</th><th>금리(%)</th><th>DoD</th><th>1주</th><th>MoM</th></tr></thead><tbody>'
       +MATS.map((m,i)=>`<tr><th scope="row">${m}</th><td class="lv">${last.v[i]==null?"-":last.v[i].toFixed(2)}</td>${cell(ld[i]??null,15)}${cell(w1[i],25)}${cell(lm[i]??null,40)}</tr>`).join("")+"</tbody></table>";
     $("#yMeta").textContent="변동은 bp. 1주는 7일 전(휴장이면 그 이전 마지막 영업일) 대비예요.";
-    $("#curve").innerHTML=curve(last.v,prev?prev.v:[null,null,null,null,null]);
+    $("#curve").innerHTML=curve([{v:prev?prev.v:MATS.map(()=>null),cls:"b"},{v:last.v,cls:"a"}],MATS);
   }catch(e){
-    $("#stamp").textContent="데이터 로드 실패";
-    $("#yMeta").textContent="data/yields.csv를 못 불러왔어요. GitHub Pages나 로컬 서버(python -m http.server)로 열어야 해요. file://로 열면 안 돼요.";
-  }
+    stamps.rates="데이터 로드 실패";
+    $("#yMeta").textContent="data/yields.csv를 못 불러왔어요. GitHub Pages나 로컬 서버(python -m http.server)로 열어야 해요.";
+  }finally{show();}
+}
+
+/* ---------- WTI ---------- */
+async function loadOil(){
+  try{
+    const rows=await getRows("data/oil.csv",1).then(r=>r.filter(x=>x.v[0]!=null));
+    mkPager("oDod",["종가($)","변동($)","변동(%)"],group(oilChg(rows,"dod"),weekKey,weekLabel),NODATA,{fmt:oilFmt,maxK:1});
+    mkPager("oMom",["종가($)","변동($)","변동(%)"],group(oilChg(rows,"mom"),d=>d.slice(0,7),monthLabel),NODATA,{fmt:oilFmt,maxK:1});
+    mkPager("oYoy",["종가($)","변동($)","변동(%)"],group(oilChg(rows,"yoy"),d=>d.slice(0,4),k=>k+"년"),"1년 전 데이터가 쌓이면 표시돼요.",{fmt:oilFmt,maxK:1});
+    if(!rows.length){stamps.oil="데이터 없음";$("#oMeta").textContent=NODATA;return;}
+    const last=rows[rows.length-1],px=last.v[0];
+    stamps.oil="WTI 최신 관측일 "+last.d;
+    const per=[["DoD",rows.length>1?rows[rows.length-2].v[0]:null],["1주",baseAt(rows,0,addDays(last.d,-7))],["MoM",baseAt(rows,0,monthAgo(last.d))],["YoY",baseAt(rows,0,yearAgo(last.d))]]
+      .map(([n,b])=>({n,b,dl:b==null?null:Math.round((px-b)*100)/100,pc:b==null?null:Math.round((px-b)/b*10000)/100}));
+    $("#oBoxes").innerHTML=`<div class="card box"><div class="k">WTI 최신 종가</div><div class="lv">${px.toFixed(2)}<small>$</small></div>${chip("DoD",per[0].dl,"$",2)}</div>`
+      +per.slice(1).map(p=>`<div class="card box"><div class="k">${p.n}</div><div class="lv ${dir(p.pc)}t">${p.pc==null?"-":sg(p.pc,2)}<small>%</small></div>${chip("",p.dl,"$",2)}</div>`).join("");
+    $("#oSnap").innerHTML='<table><thead><tr><th style="text-align:left">기간</th><th>기준 가격($)</th><th>변동($)</th><th>변동(%)</th></tr></thead><tbody>'
+      +per.map(p=>`<tr><th scope="row">${p.n}</th><td class="lv">${p.b==null?"-":p.b.toFixed(2)}</td>${cell(p.dl,6,2)}${pcell(p.pc)}</tr>`).join("")+"</tbody></table>";
+    $("#oMeta").textContent="1주는 7일 전, MoM은 한 달 전, YoY는 1년 전(휴장이면 그 이전 마지막 영업일) 대비예요. FRED의 WTI 현물 종가라 장중 실시간 값은 아니에요.";
+    const t7=rows.slice(-7);
+    $("#oTrend").innerHTML=curve([{v:t7.map(r=>r.v[0]),cls:"a"}],t7.map(r=>r.d.slice(5).replace("-","/")));
+  }catch(e){
+    stamps.oil="데이터 로드 실패";
+    $("#oMeta").textContent="data/oil.csv를 못 불러왔어요. 'Update data' 실행 후 GitHub Pages로 열어주세요.";
+  }finally{show();}
+}
+
+/* ---------- Analysis (Agent) ---------- */
+async function loadAnalysis(){
+  try{
+    const r=await fetch("data/analysis.json?"+Date.now());if(!r.ok)throw new Error(r.status);
+    const a=await r.json(),dc=["Hike","Cut","Hold"].includes(a.decision)?a.decision:"-";
+    $("#aBox").innerHTML=`<div class="dec ${dc}"><div class="dl">Decision:</div><div class="dv">${dc}</div><div class="dm">다음 FOMC: ${esc(a.next_meeting||"확인 불가")}</div></div>`;
+    $("#aEv").innerHTML=(a.evidence||[]).map(x=>`<li>${esc(x)}</li>`).join("");
+    $("#aSrc").innerHTML=(a.sources||[]).filter(s=>/^https?:\/\//.test(s.url||"")).map(s=>`<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.title||s.url)}</a></li>`).join("");
+    $("#aMeta").textContent=`생성 ${a.generated_at||"-"} · 데이터 기준일 ${a.data_as_of||"-"} · 모델 ${a.model||"-"}`;
+    $("#aEvCard").hidden=false;stamps.analysis="생성 "+(a.generated_at||"");
+  }catch(e){
+    $("#aBox").innerHTML='<section class="card"><p class="empty">아직 분석이 없어요. GitHub에 ANTHROPIC_API_KEY를 등록하고 Actions의 \'Update data\'를 실행해 주세요.</p></section>';
+    stamps.analysis="분석 없음";
+  }finally{show();}
 }
 
 /* ---------- CDS (브라우저 localStorage, 실패 시 메모리) ---------- */
+const DEF=[
+ {id:"usa",name:"USA table",ents:["United States"],tenors:["1Y","4Y","10Y"]},
+ {id:"fi",name:"Financial institution",ents:["Morgan Stanley","JP Morgan","Citigroup","Goldman Sachs","Capital One","Bank of America","Deutsche Bank","Barclays","Wells Fargo"],tenors:["1Y","3Y","5Y"]},
+ {id:"tech",name:"Tech industry",ents:["Tesla","Amazon","Broadcom","Oracle","AMD","Alphabet"],tenors:["1Y","3Y","5Y"]}];
 let mem=null;
-function loadStore(){
-  try{const s=localStorage.getItem("cds_v1");if(s)return JSON.parse(s);}catch(e){}
-  return mem||{ents:["US"],data:{}};
-}
-function saveStore(){mem=store;try{localStorage.setItem("cds_v1",JSON.stringify(store));}catch(e){}}
-let store=loadStore();
+function loadStore(){try{const s=localStorage.getItem("cds_v2");if(s)return JSON.parse(s);}catch(e){}return mem||{cfg:JSON.parse(JSON.stringify(DEF)),data:{}};}
+function save(){mem=store;try{localStorage.setItem("cds_v2",JSON.stringify(store));}catch(e){}}
+let store=loadStore(),cur="usa";
+const G=()=>store.cfg.find(g=>g.id===cur)||store.cfg[0];
+const sk=(e,t)=>e+"|"+t;
+const parseT=t=>{const m=/^(\d+(?:\.\d+)?)\s*([YM])\s*([A-Za-z]{3})?$/i.exec(t.trim());return m?{y:parseFloat(m[1])/(m[2].toUpperCase()==="M"?12:1),c:(m[3]||"USD").toUpperCase(),l:t.replace(/\s*[A-Za-z]{3}$/,"")}:null;};
 function renderCds(){
-  const rows=Object.keys(store.data).sort().map(d=>({d,v:store.ents.map(e=>store.data[d][e]??null)})).filter(r=>r.v.some(x=>x!=null));
-  const msg="아직 입력한 값이 없어요. 위에서 날짜와 값을 넣고 저장하세요.";
-  mkPager("cDod",store.ents,group(changes(rows,"dod",1),weekKey,weekLabel),msg);
-  mkPager("cMom",store.ents,group(changes(rows,"mom",1),d=>d.slice(0,7),monthLabel),msg);
+  const g=G(),nt=g.tenors.length;
+  $("#cGrp").innerHTML=store.cfg.map(x=>`<button class="pill ${x.id===g.id?"on":""}" data-g="${x.id}">${esc(x.name)}</button>`).join("");
+  const keys=g.ents.flatMap(e=>g.tenors.map(t=>sk(e,t))),labels=g.ents.flatMap(e=>g.tenors.map(t=>e+" "+t));
+  const rows=Object.keys(store.data).sort().map(d=>({d,v:keys.map(k=>store.data[d][k]??null)})).filter(r=>r.v.some(x=>x!=null));
+  const li=k=>{for(let i=rows.length-1;i>=0;i--)if(rows[i].v[k]!=null)return i;return -1;};
+  const lv=k=>{const i=li(k);if(i<0)return null;const v=rows[i].v[k],b=baseFor(rows,i,k,"dod");return {v,c:b==null?null:Math.round((v-b)*10)/10};};
+  $("#cLv").innerHTML=!rows.length?'<p class="empty">아직 입력한 값이 없어요. 아래 값 입력에서 날짜와 값을 넣고 저장하세요.</p>'
+   :'<table><thead><tr><th style="text-align:left">'+esc(g.name)+'</th>'+g.tenors.map(t=>`<th>${esc(t)}</th>`).join("")+'</tr></thead><tbody>'
+    +g.ents.map((e,i)=>`<tr><th scope="row">${esc(e)}</th>`+g.tenors.map((t,j)=>{const o=lv(i*nt+j);return o?`<td class="lv">${o.v.toFixed(1)}${o.c==null?"":`<small class="${dir(o.c)}t">${sg(o.c,1)}</small>`}</td>`:'<td class="na">-</td>';}).join("")+"</tr>").join("")+"</tbody></table>";
+  $("#cCurves").innerHTML=g.ents.map((e,i)=>{
+    const pts=g.tenors.map((t,j)=>({p:parseT(t),o:lv(i*nt+j)})).filter(x=>x.p);
+    const ys=[...new Set(pts.map(x=>x.p.y))].sort((a,b)=>a-b),ccys=[...new Set(pts.map(x=>x.p.c))];
+    const X=ys.map(y=>pts.find(x=>x.p.y===y).p.l);
+    const S=ccys.map((c,k)=>({cls:k?"c":"a",v:ys.map(y=>{const q=pts.find(x=>x.p.y===y&&x.p.c===c&&x.o);return q?q.o.v:null;})}));
+    const lg=ccys.length>1?`<div class="legend">${ccys.map((c,k)=>`<span><i class="${k?"e":""}"></i>${c}</span>`).join("")}</div>`:"";
+    return `<section class="card"><h3>${esc(e)}</h3>${lg}${curve(S,X)}</section>`;
+  }).join("");
+  mkPager("cDod",labels,group(changes(rows,"dod",1),weekKey,weekLabel),"아직 입력한 값이 없어요.");
+  mkPager("cMom",labels,group(changes(rows,"mom",1),d=>d.slice(0,7),monthLabel),"아직 입력한 값이 없어요.");
 }
-function renderInputs(){
-  const d=$("#cDate").value,cur=store.data[d]||{};
-  $("#cInputs").innerHTML=store.ents.map((e,i)=>`<label>${esc(e)}<span style="display:flex;align-items:center"><input type="number" step="0.01" data-e="${esc(e)}" value="${cur[e]??""}"><button class="x" data-rm="${i}" title="항목 삭제" aria-label="${esc(e)} 삭제">×</button></span></label>`).join("");
+function renderEntry(){
+  const g=G(),c=store.data[$("#cDate").value]||{};
+  $("#cGrid").innerHTML='<table><thead><tr><th style="text-align:left">'+esc(g.name)+'</th>'+g.tenors.map((t,j)=>`<th>${esc(t)}<button class="x" data-rt="${j}" aria-label="${esc(t)} 삭제">×</button></th>`).join("")+'</tr></thead><tbody>'
+   +g.ents.map((e,i)=>`<tr><th scope="row">${esc(e)}<button class="x" data-re="${i}" aria-label="${esc(e)} 삭제">×</button></th>`+g.tenors.map(t=>`<td><input type="number" step="0.01" data-k="${esc(sk(e,t))}" value="${c[sk(e,t)]??""}"></td>`).join("")+"</tr>").join("")+"</tbody></table>";
 }
+const redraw=()=>{renderCds();renderEntry();};
 $("#cDate").value=new Date().toLocaleDateString("sv-SE");
-$("#cDate").addEventListener("change",renderInputs);
-$("#cInputs").addEventListener("click",ev=>{
-  const i=ev.target.dataset.rm;if(i==null)return;
-  const e=store.ents[i];
-  if(!confirm(`'${e}' 항목과 저장된 모든 값을 지울까요?`))return;
-  store.ents.splice(i,1);Object.values(store.data).forEach(o=>delete o[e]);
-  saveStore();renderInputs();renderCds();
+$("#cDate").addEventListener("change",renderEntry);
+$("#cGrp").addEventListener("click",ev=>{if(ev.target.dataset.g){cur=ev.target.dataset.g;redraw();}});
+$("#cGrid").addEventListener("click",ev=>{
+  const g=G(),t=ev.target.dataset;
+  if(t.rt!=null){const n=g.tenors[t.rt];if(!confirm(`'${n}' 만기와 입력된 값을 지울까요?`))return;
+    g.tenors.splice(t.rt,1);Object.values(store.data).forEach(o=>g.ents.forEach(e=>delete o[sk(e,n)]));save();redraw();}
+  if(t.re!=null){const n=g.ents[t.re];if(!confirm(`'${n}' 항목과 입력된 값을 지울까요?`))return;
+    g.ents.splice(t.re,1);Object.values(store.data).forEach(o=>g.tenors.forEach(x=>delete o[sk(n,x)]));save();redraw();}
 });
 $("#cSave").addEventListener("click",()=>{
   const d=$("#cDate").value;if(!d)return;
   const o=store.data[d]=store.data[d]||{};
-  document.querySelectorAll("#cInputs input").forEach(inp=>{
-    const e=inp.dataset.e;
-    if(inp.value==="")delete o[e];else o[e]=parseFloat(inp.value);
-  });
+  document.querySelectorAll("#cGrid input").forEach(i=>{if(i.value==="")delete o[i.dataset.k];else o[i.dataset.k]=parseFloat(i.value);});
   if(!Object.keys(o).length)delete store.data[d];
-  saveStore();renderCds();
+  save();renderCds();
 });
-$("#addEnt").addEventListener("click",()=>{
-  const n=$("#newEnt").value.replace(/,/g," ").trim();
-  if(!n||store.ents.includes(n))return;
-  store.ents.push(n);$("#newEnt").value="";saveStore();renderInputs();renderCds();
-});
+const clean=s=>s.replace(/[,|]/g," ").trim();
+$("#addEnt").addEventListener("click",()=>{const n=clean($("#newEnt").value),g=G();if(!n||g.ents.includes(n))return;g.ents.push(n);$("#newEnt").value="";save();redraw();});
+$("#addTen").addEventListener("click",()=>{const n=clean($("#newTen").value),g=G();if(!n||g.tenors.includes(n))return;g.tenors.push(n);$("#newTen").value="";save();redraw();});
 $("#exp").addEventListener("click",()=>{
-  const lines=["date,"+store.ents.join(",")];
-  Object.keys(store.data).sort().forEach(d=>lines.push(d+","+store.ents.map(e=>store.data[d][e]??"").join(",")));
-  const a=document.createElement("a");
-  a.href=URL.createObjectURL(new Blob([lines.join("\n")],{type:"text/csv"}));
-  a.download="cds.csv";a.click();URL.revokeObjectURL(a.href);
+  const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(store)],{type:"application/json"}));
+  a.download="cds-backup.json";a.click();URL.revokeObjectURL(a.href);
 });
 $("#imp").addEventListener("change",async ev=>{
   const f=ev.target.files[0];if(!f)return;
-  const L=(await f.text()).trim().split(/\r?\n/),h=L[0].split(",").slice(1).map(s=>s.trim());
-  h.forEach(e=>{if(e&&!store.ents.includes(e))store.ents.push(e);});
-  L.slice(1).forEach(l=>{
-    const c=l.split(","),d=c[0];if(!d)return;
-    h.forEach((e,i)=>{const x=parseFloat(c[i+1]);if(!isNaN(x)){(store.data[d]=store.data[d]||{})[e]=x;}});
-  });
-  saveStore();renderInputs();renderCds();ev.target.value="";
+  try{const s=JSON.parse(await f.text());if(!s.cfg||!s.data)throw 0;
+    if(!confirm("현재 CDS 데이터를 이 백업으로 바꿀까요?")){ev.target.value="";return;}
+    store=s;save();redraw();}catch(e){alert("올바른 백업 파일이 아니에요.");}
+  ev.target.value="";
 });
 
-renderInputs();renderCds();loadYields();
+redraw();loadYields();loadOil();loadAnalysis();stamps.cds="직접 입력";show();
 </script>
 </body>
 </html>
